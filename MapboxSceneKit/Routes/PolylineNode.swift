@@ -87,19 +87,14 @@ public class PolylineNode: SCNNode {
 
         self.init(positionCurve: pos, radiusCurve: rad, colorCurve: col, sampleCount: positions.count)
     }
-
-    public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
-// MARK: - Public methods
-public extension PolylineNode {
-
+    
     /// Position along the polyline
     ///
     /// - Parameter progress: normalized progress along the polyline.
     ///   0.0 = the beginning, 0.5 = halfway, 1.0 = the end of the line.
     /// - Returns: the local position at the given progress
-    func getPositon(atProgress progress: CGFloat) -> SCNVector3 {
+    @objc
+    public func getPositon(atProgress progress: CGFloat) -> SCNVector3 {
         return positionCurve.evaluate(progress: progress)
     }
 
@@ -108,7 +103,8 @@ public extension PolylineNode {
     /// - Parameter progress: normalized progress along the polyline.
     ///   0.0 = the beginning, 0.5 = halfway, 1.0 = the end of the line.
     /// - Returns: the radius at the given progress
-    func getRadius(atProgress progress: CGFloat) -> CGFloat {
+    @objc
+    public func getRadius(atProgress progress: CGFloat) -> CGFloat {
         return radiusCurve.evaluate(progress: progress).toRadius()
     }
 
@@ -117,9 +113,18 @@ public extension PolylineNode {
     /// - Parameter progress: normalized progress along the polyline.
     ///   0.0 = the beginning, 0.5 = halfway, 1.0 = the end of the line.
     /// - Returns: the UIColor at the given progress
-    func getColor(atProgress progress: CGFloat) -> UIColor {
+    @objc
+    public func getColor(atProgress progress: CGFloat) -> UIColor {
         return colorCurve.evaluate(progress: progress).toColor()
     }
+
+    public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+// MARK: - Public methods
+public extension PolylineNode {
+
+    
 }
 
 // MARK: - BezierSpline Extensions
