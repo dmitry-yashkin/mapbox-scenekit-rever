@@ -66,8 +66,8 @@ public final class MapboxImageAPI: NSObject {
         }
 
         if let mapboxAccessToken = mapboxAccessToken {
-            eventsManager.isMetricsEnabledInSimulator = true
-            eventsManager.isMetricsEnabledForInUsePermissions = false
+//            eventsManager.isMetricsEnabledInSimulator = true
+//            eventsManager.isMetricsEnabledForInUsePermissions = false
             eventsManager.initialize(withAccessToken: mapboxAccessToken, userAgentBase: "mapbox-scenekit-ios", hostSDKVersion: String(describing: Bundle(for: MapboxImageAPI.self).object(forInfoDictionaryKey: "CFBundleShortVersionString")!))
             eventsManager.disableLocationMetrics()
             eventsManager.sendTurnstileEvent()
@@ -161,7 +161,7 @@ public final class MapboxImageAPI: NSObject {
             }
 
             //Color data gets messed up if the user expectes a PNG back but doesn't get one
-            if format == MapboxImageAPI.TileImageFormatPNG, let image = imageBuilder.makeImage(), let png = UIImagePNGRepresentation(image), let formattedImage = UIImage(data: png) {
+            if format == MapboxImageAPI.TileImageFormatPNG, let image = imageBuilder.makeImage(), let png = image.pngData(), let formattedImage = UIImage(data: png) {
                 DispatchQueue.main.async {
                     completion(formattedImage, nil)
                 }
