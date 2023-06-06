@@ -221,7 +221,7 @@ open class TerrainNode: SCNNode {
         let southWestCorner = self.southWestCorner
         let northEastCorner = self.northEastCorner
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            if let taskID = self?.api.image(forTileset: "mapbox.terrain-rgb",
+            if let taskID = self?.api.image(forTileset: "mapbox.mapbox-terrain-dem-v1",
                                             zoomLevel: zoomLevel,
                                             southWestCorner: southWestCorner,
                                             northEastCorner: northEastCorner,
@@ -567,6 +567,9 @@ extension TerrainNode {
     }
 
     fileprivate static func height(heights: [[Double]], x: Float, z: Float, metersPerX: Double, metersPerY: Double) -> Double? {
+        if (heights.isEmpty || metersPerX == 0 || metersPerY == 0) {
+            return nil
+        }
         let imageX: Int = Int(x / Float(metersPerX))
         let imageY: Int = Int(z / Float(metersPerY))
         guard let imageHeight = TerrainNode.height(heights: heights, x: imageX, y: imageY) else {

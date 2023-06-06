@@ -66,8 +66,6 @@ public final class MapboxImageAPI: NSObject {
         }
 
         if let mapboxAccessToken = mapboxAccessToken {
-//            eventsManager.isMetricsEnabledInSimulator = true
-//            eventsManager.isMetricsEnabledForInUsePermissions = false
             eventsManager.initialize(withAccessToken: mapboxAccessToken, userAgentBase: "mapbox-scenekit-ios", hostSDKVersion: String(describing: Bundle(for: MapboxImageAPI.self).object(forInfoDictionaryKey: "CFBundleShortVersionString")!))
             eventsManager.disableLocationMetrics()
             eventsManager.sendTurnstileEvent()
@@ -113,7 +111,10 @@ public final class MapboxImageAPI: NSObject {
 
         let group = DispatchGroup()
         let groupID = UUID()
-        pendingFetches[groupID] = [UUID]()
+        self.pendingFetchesDispatchQueue.sync(flags: .barrier) { [weak self] in
+            guard let self = self else { return }
+            self.pendingFetches[groupID] = [UUID]()
+        }
 
         var completed: Int = 0
         let total = bounding.xs.count * bounding.ys.count
@@ -196,7 +197,10 @@ public final class MapboxImageAPI: NSObject {
 
         let group = DispatchGroup()
         let groupID = UUID()
-        pendingFetches[groupID] = [UUID]()
+        pendingFetchesDispatchQueue.sync(flags: .barrier) { [weak self] in
+            guard let self = self else { return }
+            self.pendingFetches[groupID] = [UUID]()
+        }
 
         var completed: Int = 0
         let total = bounding.xs.count * bounding.ys.count
@@ -236,7 +240,10 @@ public final class MapboxImageAPI: NSObject {
         }
 
         group.notify(queue: DispatchQueue.main) {
-            self.pendingFetches.removeValue(forKey: groupID)
+            self.pendingFetchesDispatchQueue.sync(flags: .barrier) { [weak self] in
+                guard let self = self else { return }
+                self.pendingFetches.removeValue(forKey: groupID)
+            }
             completion(error == nil ? imageBuilder.makeImage() : nil, error?.toNSError())
         }
 
@@ -248,13 +255,16 @@ public final class MapboxImageAPI: NSObject {
      **/
     @objc
     func cancelRequestWithID(_ groupID: UUID) {
-        guard let tasks = pendingFetches[groupID] else {
-            return
+        self.pendingFetchesDispatchQueue.sync(flags: .barrier) { [weak self] in
+            guard let tasks = pendingFetches[groupID] else {
+                return
+            }
+            for task in tasks {
+                httpAPI.cancelRequestWithID(task)
+            }
+
+            self?.pendingFetches.removeValue(forKey: groupID)
         }
-        for task in tasks {
-            httpAPI.cancelRequestWithID(task)
-        }
-        pendingFetches.removeValue(forKey: groupID)
     }
 
     //MARK: - Helpers
