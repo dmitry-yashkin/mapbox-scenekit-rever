@@ -6,6 +6,7 @@
 //  Copyright © 2018 MapBox. All rights reserved.
 //
 
+#if os(iOS)
 import Foundation
 import SceneKit
 
@@ -156,3 +157,4 @@ fileprivate extension BezierSpline3D {
         self.init(curvePoints: points)
     }
 }
+#endif

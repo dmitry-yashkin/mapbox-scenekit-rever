@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import UIKit
 
@@ -16,4 +17,4 @@ internal func * (left: UIEdgeInsets, right: CGFloat) -> UIEdgeInsets {
 internal func *= ( left: inout UIEdgeInsets, right: CGFloat) {
     left = left * right
 }
-
+#endif

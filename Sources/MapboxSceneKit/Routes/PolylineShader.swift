@@ -6,6 +6,7 @@
 //  Copyright © 2018 MapBox. All rights reserved.
 //
 
+#if os(iOS)
 import Foundation
 import SceneKit
 import Metal
@@ -204,3 +205,4 @@ fileprivate extension UIColor {
         return color
     }
 }
+#endif

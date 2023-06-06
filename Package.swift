@@ -23,10 +23,7 @@ let package = Package(
         .target(
             name: "MapboxSceneKit",
             dependencies: [
-                .product(name: "MapboxMobileEvents", package: "mapbox-events-ios")
-            ]),
-        .testTarget(
-            name: "MapboxSceneKitTests",
-            dependencies: ["MapboxSceneKit"]),
+                .product(name: "MapboxMobileEvents", package: "mapbox-events-ios", condition: .when(platforms: [.iOS]))
+            ])
     ]
 )

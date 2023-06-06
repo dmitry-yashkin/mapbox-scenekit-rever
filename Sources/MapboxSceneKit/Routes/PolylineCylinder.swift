@@ -6,6 +6,7 @@
 //  Copyright © 2018 MapBox. All rights reserved.
 //
 
+#if os(iOS)
 import Foundation
 import SceneKit
 
@@ -143,3 +144,4 @@ internal class PolylineCylinder: PolylineRenderer {
         return SCNVector3( iv.x / length, iv.y / length, iv.z / length)
     }
 }
+#endif

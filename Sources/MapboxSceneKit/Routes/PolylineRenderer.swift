@@ -6,6 +6,7 @@
 //  Copyright © 2018 MapBox. All rights reserved.
 //
 
+#if os(iOS)
 import Foundation
 import SceneKit
 import Metal
@@ -39,3 +40,4 @@ internal class PolylineRendererVersion {
         }
     }
 }
+#endif

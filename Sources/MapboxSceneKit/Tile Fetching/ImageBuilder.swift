@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import UIKit
 
@@ -33,3 +34,4 @@ internal final class ImageBuilder {
         return UIImage(cgImage: croppedImageRef)
     }
 }
+#endif

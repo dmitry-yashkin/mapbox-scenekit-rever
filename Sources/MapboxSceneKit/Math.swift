@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import CoreLocation
 import CoreGraphics
@@ -66,3 +67,4 @@ internal class Math {
         return zoom
     }
 }
+#endif

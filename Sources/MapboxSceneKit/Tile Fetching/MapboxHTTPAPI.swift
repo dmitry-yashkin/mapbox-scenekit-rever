@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import UIKit
 import CoreLocation
@@ -93,3 +94,4 @@ internal final class MapboxHTTPAPI {
         MapboxHTTPAPI.operationQueue.operations.filter({ ($0 as? HttpRequestOperation)?.taskID == id }).forEach({ $0.cancel() })
     }
 }
+#endif

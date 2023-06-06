@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import SceneKit
 
@@ -161,5 +162,4 @@ internal extension SCNVector3 {
         return sqrtf(x * x + y * y + z * z)
     }
 }
-
-
+#endif

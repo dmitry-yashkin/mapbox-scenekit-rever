@@ -6,6 +6,7 @@
 //  Copyright © 2018 MapBox. All rights reserved.
 //
 
+#if os(iOS)
 import SceneKit
 import UIKit
 
@@ -72,3 +73,4 @@ internal extension SCNVector3 {
         return CGFloat(self.x)
     }
 }
+#endif

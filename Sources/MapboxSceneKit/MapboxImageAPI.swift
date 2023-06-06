@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import UIKit
 import CoreLocation
@@ -304,3 +305,4 @@ public final class MapboxImageAPI: NSObject {
         return ((xs.min()!...xs.max()!).map({ $0 }), (ys.min()!...ys.max()!).map({ $0 }), insets)
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import SceneKit
 import CoreLocation
@@ -600,3 +601,4 @@ extension TerrainNode {
         return Double(terrainHeight * multiplier)
     }
 }
+#endif
