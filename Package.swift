@@ -24,6 +24,8 @@ let package = Package(
             name: "MapboxSceneKit",
             dependencies: [
                 .product(name: "MapboxMobileEvents", package: "mapbox-events-ios", condition: .when(platforms: [.iOS]))
-            ])
+            ],
+            resources: [.process("Routes/Shaders/unlit-line.metal")]
+        )
     ]
 )

@@ -18,7 +18,7 @@ extension SCNProgram {
     /// - Parameter myClass: The class used to lookup metal libraries outside the main bundle, likely from an imported framework.
     public convenience init( withLibraryForClass myClass: AnyClass ){
         self.init()
-        let classBundle = Bundle(for: myClass)
+        let classBundle = Bundle.module
         let device = MTLCreateSystemDefaultDevice()
         do {
             let bundleLib = try device?.makeDefaultLibrary(bundle: classBundle)
