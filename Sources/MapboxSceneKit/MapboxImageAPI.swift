@@ -257,14 +257,16 @@ public final class MapboxImageAPI: NSObject {
     @objc
     func cancelRequestWithID(_ groupID: UUID) {
         self.pendingFetchesDispatchQueue.sync(flags: .barrier) { [weak self] in
-            guard let tasks = pendingFetches[groupID] else {
+            guard let self,
+                  let tasks = self.pendingFetches[groupID]
+            else {
                 return
             }
             for task in tasks {
-                httpAPI.cancelRequestWithID(task)
+                self.httpAPI.cancelRequestWithID(task)
             }
 
-            self?.pendingFetches.removeValue(forKey: groupID)
+            self.pendingFetches.removeValue(forKey: groupID)
         }
     }
 
